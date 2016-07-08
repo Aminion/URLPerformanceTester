@@ -1,15 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Linq;
 using URLPerformanceTester.Models.Concrete;
 using System.Xml.Linq;
 using Xunit;
 
 namespace URLPerformanceTester.Tests.Models
 {
-   public  class SitemapLinksExtractorTests
+    public  class SitemapLinksExtractorTests
     {
         [Fact]
         public void ExtractLinks()
