@@ -2,14 +2,14 @@ namespace URLPerformanceTester.Migrations
 {
     using System.Data.Entity.Migrations;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<Infrastructure.PerformanceTesterContext>
+    internal sealed class Configuration : DbMigrationsConfiguration<Infrastructure.AppDbContext>
     {
         public Configuration()
         {
             AutomaticMigrationsEnabled = true;
         }
 
-        protected override void Seed(Infrastructure.PerformanceTesterContext context)
+        protected override void Seed(Infrastructure.AppDbContext context)
         {
             //  This method will be called after migrating to the latest version.
 

@@ -7,9 +7,9 @@ namespace URLPerformanceTester.Models.Concrete
 {
     public class LinkTester : IUrlTester
     {
-        public TestResult Test(string url, int times)
+        public URLTestResult Test(string url, int times)
         {
-            var test = new TestResult() { Url = url };
+            var test = new URLTestResult() { URL = url };
             var sw = new Stopwatch();
             for (var i = 0; i < times; i++)
             {

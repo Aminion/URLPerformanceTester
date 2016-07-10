@@ -2,9 +2,9 @@
 
 namespace URLPerformanceTester.Models.Entities
 {
-    public class TestResult
+    public class URLTestResult
     {
-        public string Url { get; set; }
+        public string URL { get; set; }
         public int MinTime { get; set; }
         public int MaxTime { get; set; }
         public int AvgTime { get; set; }

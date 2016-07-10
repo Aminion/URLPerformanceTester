@@ -4,6 +4,6 @@ namespace URLPerformanceTester.Models.Abstract
 {
     public interface IUrlTester
     {
-        TestResult Test(string url, int times);
+        URLTestResult Test(string url, int times);
     }
 }

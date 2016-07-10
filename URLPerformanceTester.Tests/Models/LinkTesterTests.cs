@@ -29,7 +29,7 @@ namespace URLPerformanceTester.Tests.Models
                 Assert.True(result.MinTime > 0);
                 Assert.True(result.MaxTime > 0);
                 Assert.True(result.AvgTime >= result.MinTime && result.AvgTime <= result.MaxTime);
-                Assert.True(!string.IsNullOrEmpty(result.Url));
+                Assert.True(!string.IsNullOrEmpty(result.URL));
             }
 
         }
