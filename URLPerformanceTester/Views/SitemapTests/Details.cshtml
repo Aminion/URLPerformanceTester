@@ -1,0 +1,46 @@
+﻿@model URLPerformanceTester.ViewModels.SitemapTestDetailsViewModel
+
+@{
+    ViewBag.Title = "Details";
+}
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <td>Creation time</td>
+            <td>URL</td>
+            <td>Progress</td>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <th>@Model.CreationTime</th>
+            <th>@Model.SitemapURL</th>
+            <th>@Model.URLsTested of @Model.URLsCount</th>
+        </tr>
+    </tbody>
+</table>
+
+@foreach (var urlTest in Model.URLTestResults)
+{
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <td>URL</td>
+                <td>Min</td>
+                <td>Avg</td>
+                <td>Max</td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th>@urlTest.URL</th>
+                <th>@urlTest.MinTime</th>
+                <th>@urlTest.AvgTime</th>
+                <th>@urlTest.StatusCode.ToString()</th>
+            </tr>
+        </tbody>
+    </table>
+}
+<p>
+    @Html.ActionLink("Back to List", "Index")
+</p>

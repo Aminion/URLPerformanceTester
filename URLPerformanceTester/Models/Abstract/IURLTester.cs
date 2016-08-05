@@ -2,8 +2,8 @@
 
 namespace URLPerformanceTester.Models.Abstract
 {
-    public interface IUrlTester
+    public interface IURLTester
     {
-        URLTestResult Test(string url, int times);
+        URLTest Test(string url, int times);
     }
 }

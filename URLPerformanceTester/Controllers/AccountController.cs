@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System.Web;
 using System.Web.Mvc;
 using System.Threading.Tasks;
+using System;
 using Microsoft.Owin.Security;
-using System.Security.Claims;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using URLPerformanceTester.Infrastructure;
@@ -16,7 +13,15 @@ namespace URLPerformanceTester.Controllers
     [Authorize]
     public class AccountController : Controller
     {
-        [ValidateAntiForgeryToken]
+        private readonly AppUserManager _userManager;
+        private readonly IAuthenticationManager _authenticationManager;
+        public AccountController(IAuthenticationManager authManager, AppUserManager userManager)
+        {
+            _userManager = userManager;
+            _authenticationManager = authManager;
+        }
+
+        [AllowAnonymous]
         public async Task<ActionResult> Login(string returnUrl)
         {
             AppUser user = null;
@@ -24,16 +29,18 @@ namespace URLPerformanceTester.Controllers
             if (CookieStoredUserId != null)
             {
                 user = await UserManager.FindByIdAsync(cookieId);
-                if (user == null)
-                {
-                    user = new AppUser();
-                    await UserManager.CreateAsync(user);
-                    CookieStoredUserId = user.Id;
-                }
+            }
+            if (user == null)
+            {
+                user = new AppUser();
+                user.UserName = user.Id;
+                var r = await UserManager.CreateAsync(user);
+                CookieStoredUserId = user.Id;
             }
             var ident = await UserManager.CreateIdentityAsync(user, DefaultAuthenticationTypes.ApplicationCookie);
             AuthManager.SignOut();
             AuthManager.SignIn(new AuthenticationProperties { IsPersistent = false }, ident);
+
             return new RedirectResult(returnUrl);
         }
         private string CookieStoredUserId
@@ -44,7 +51,12 @@ namespace URLPerformanceTester.Controllers
             }
             set
             {
-                Response.Cookies[UserIdCookieName].Value = value;
+                var cookie = new HttpCookie(UserIdCookieName)
+                {
+                    Value = value,
+                    Expires = DateTime.Now.AddYears(1)
+                };
+                Response.Cookies.Add(cookie);
             }
         }
         private const string UserIdCookieName = "UserId";

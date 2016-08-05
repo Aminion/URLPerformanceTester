@@ -5,11 +5,11 @@ using URLPerformanceTester.Models.Entities;
 
 namespace URLPerformanceTester.Models.Concrete
 {
-    public class LinkTester : IUrlTester
+    public class URLTester : IURLTester
     {
-        public URLTestResult Test(string url, int times)
+        public URLTest Test(string url, int times)
         {
-            var test = new URLTestResult() { URL = url };
+            var test = new URLTest() { URL = url };
             var sw = new Stopwatch();
             for (var i = 0; i < times; i++)
             {

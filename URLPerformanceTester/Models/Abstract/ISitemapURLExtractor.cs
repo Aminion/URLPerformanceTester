@@ -3,7 +3,7 @@ using System.Xml.Linq;
 
 namespace URLPerformanceTester.Models.Abstract
 {
-    interface ISitemapLinksExtractor
+    interface ISitemapURLExtractor
     {
         IEnumerable<string> Extract(XDocument sitemapDocument);
     }

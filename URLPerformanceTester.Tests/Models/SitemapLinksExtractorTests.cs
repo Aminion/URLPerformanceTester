@@ -12,7 +12,7 @@ namespace URLPerformanceTester.Tests.Models
         {
             //arrange
             var doc = XDocument.Parse("<sitemapindex><sitemap><loc>one</loc></sitemap><sitemap><loc>two</loc></sitemap></sitemapindex>");
-            var extracter = new SitemapLinkExtractor();
+            var extracter = new SitemapURLExtractor();
             //act
             var result = extracter.Extract(doc).ToList();
             //assert

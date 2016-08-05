@@ -5,7 +5,7 @@ using URLPerformanceTester.Models.Abstract;
 
 namespace URLPerformanceTester.Models.Concrete
 {
-    public class SitemapLinkExtractor : ISitemapLinksExtractor
+    public class SitemapURLExtractor : ISitemapURLExtractor
     {
         public IEnumerable<string> Extract(XDocument sitemapDocument) => sitemapDocument.Descendants("loc").Select(e => e.Value);
     }

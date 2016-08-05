@@ -14,6 +14,8 @@ namespace URLPerformanceTester.Infrastructure
         {
             return new AppDbContext();
         }
+
+        public DbSet<SitemapTest> SitemapTests { get; set; }
     }
     public class IdentityDbInit : DropCreateDatabaseIfModelChanges<AppDbContext>
     {

@@ -12,7 +12,7 @@ namespace URLPerformanceTester.Tests.Models
         public void ListOfLinksTest()
         {
             //arrange
-            var tester = new LinkTester();
+            var tester = new URLTester();
             var urls = new List<string>()
             {
                 "https://habrahabr.ru/",
