@@ -47,7 +47,7 @@ namespace URLPerformanceTester.Controllers
         {
             get
             {
-                return Request.Cookies[UserIdCookieName] != null ? Request.Cookies[UserIdCookieName].Value : null;
+                return Request.Cookies[UserIdCookieName]?.Value;
             }
             set
             {
@@ -60,19 +60,7 @@ namespace URLPerformanceTester.Controllers
             }
         }
         private const string UserIdCookieName = "UserId";
-        private IAuthenticationManager AuthManager
-        {
-            get
-            {
-                return HttpContext.GetOwinContext().Authentication;
-            }
-        }
-        private AppUserManager UserManager
-        {
-            get
-            {
-                return HttpContext.GetOwinContext().GetUserManager<AppUserManager>();
-            }
-        }
+        private IAuthenticationManager AuthManager => HttpContext.GetOwinContext().Authentication;
+        private AppUserManager UserManager => HttpContext.GetOwinContext().GetUserManager<AppUserManager>();
     }
 }

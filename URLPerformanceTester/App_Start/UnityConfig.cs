@@ -5,12 +5,15 @@ using Microsoft.Practices.Unity;
 using System;
 using System.Web;
 using URLPerformanceTester.Infrastructure;
+using URLPerformanceTester.Models.Abstract;
+using URLPerformanceTester.Models.Concrete;
 using URLPerformanceTester.Models.Entities;
+
 namespace URLPerformanceTester
 {
     public static class UnityConfig
     {
-        private static Lazy<IUnityContainer> container = new Lazy<IUnityContainer>(() =>
+        private static readonly Lazy<IUnityContainer> Container = new Lazy<IUnityContainer>(() =>
         {
             var container = new UnityContainer();
             RegisterTypes(container);
@@ -19,13 +22,22 @@ namespace URLPerformanceTester
 
         public static IUnityContainer GetConfiguredContainer()
         {
-            return container.Value;
+            return Container.Value;
         }
 
         public static void RegisterTypes(IUnityContainer container)
         {
-            container.RegisterType<IAuthenticationManager>(new InjectionFactory(c => HttpContext.Current.GetOwinContext().Authentication));
-            container.RegisterType<IUserStore<AppUser>, UserStore<AppUser>>(new InjectionConstructor(typeof(AppDbContext)));
+            container.RegisterType<IAuthenticationManager>(
+                new InjectionFactory(c => HttpContext.Current.GetOwinContext().Authentication));
+            container.RegisterType<IUserStore<AppUser>, UserStore<AppUser>>(
+                new InjectionConstructor(typeof(AppDbContext)));
+            container.RegisterType<IGenericRepository<RequestTestSet>, GenericRepository<AppDbContext, RequestTestSet>>();
+            container.RegisterType<ISitemapExtractor, SitemapUrlExtractor>();
+            container.RegisterType<IUrlTester, UrlTester>();
+            container.RegisterType<ISitemapBackgroundTester, RequestBackgroundTester>();
+            container
+                .RegisterType
+                <IBackgroundTaskManager<ISitemapBackgroundTester>, BackgroundTaskManager<ISitemapBackgroundTester>>();
         }
     }
 }

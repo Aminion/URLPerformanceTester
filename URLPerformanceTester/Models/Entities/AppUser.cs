@@ -5,6 +5,6 @@ namespace URLPerformanceTester.Models.Entities
 {
     public class AppUser : IdentityUser
     {
-        public virtual List<SitemapTest> SitemapTests { get; set; }
+        public virtual List<RequestTestSet> SitemapTests { get; set; }
     }
 }

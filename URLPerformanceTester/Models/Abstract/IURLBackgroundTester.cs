@@ -2,8 +2,8 @@
 
 namespace URLPerformanceTester.Models.Abstract
 {
-    interface ISitemapBackgroundTester
+    public interface ISitemapBackgroundTester
     {
-        void Perform(IEnumerable<string> sitemapURLs, int sitemapTestId);
+        void Perform(IEnumerable<string> sitemapUrLs, int sitemapTestId);
     }
 }

@@ -5,19 +5,18 @@ using Xunit;
 
 namespace URLPerformanceTester.Tests.Models
 {
-    public  class SitemapLinksExtractorTests
+    public  class SitemapURLExtractorTests
     {
         [Fact]
-        public void ExtractLinks()
+        public void ExtractURLsTest()
         {
             //arrange
-            var doc = XDocument.Parse("<sitemapindex><sitemap><loc>one</loc></sitemap><sitemap><loc>two</loc></sitemap></sitemapindex>");
-            var extracter = new SitemapURLExtractor();
+            var url = "https://google.com/sitemap.xml";
+            var extracter = new SitemapUrlExtractor();
             //act
-            var result = extracter.Extract(doc).ToList();
+            var result = extracter.TryExtract(url).ToList();
             //assert
-            Assert.Equal("one", result[0]);
-            Assert.Equal("two", result[1]);
+            Assert.True(result.Count!=0);
         }
 
     }

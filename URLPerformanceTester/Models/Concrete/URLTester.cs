@@ -5,30 +5,20 @@ using URLPerformanceTester.Models.Entities;
 
 namespace URLPerformanceTester.Models.Concrete
 {
-    public class URLTester : IURLTester
+    public class UrlTester : IUrlTester
     {
-        public URLTest Test(string url, int times)
+        public RequestTest Test(string url)
         {
-            var test = new URLTest() { URL = url };
+            var test = new RequestTest() {Url = url};
             var sw = new Stopwatch();
-            for (var i = 0; i < times; i++)
+            var request = WebRequest.CreateHttp(test.Url);
+            sw.Start();
+            using (var response = (HttpWebResponse) request.GetResponse())
             {
-                var request = WebRequest.CreateHttp(url);
-                sw.Start();
-                using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
-                {
-                    sw.Stop();
-                    var elapsed = (int)sw.ElapsedMilliseconds;
-                    if (elapsed > test.MaxTime) test.MaxTime = elapsed;
-                    if (test.MinTime == 0) test.MinTime = elapsed;
-                    else if (elapsed < test.MinTime) test.MinTime = elapsed;
-                    test.AvgTime += elapsed;
-                    test.StatusCode = response.StatusCode;
-                    sw.Reset();
-                }
-
+                sw.Stop();
+                test.Time = (int) sw.ElapsedMilliseconds;
+                test.StatusCode = response.StatusCode;
             }
-            test.AvgTime /= times;
             return test;
         }
     }

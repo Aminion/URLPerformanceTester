@@ -12,7 +12,7 @@ namespace URLPerformanceTester
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
-                defaults: new { controller = "SitemapTests", action = "Index", id = UrlParameter.Optional }
+                defaults: new { controller = "Tests", action = "Index", id = UrlParameter.Optional }
             );
         }
     }

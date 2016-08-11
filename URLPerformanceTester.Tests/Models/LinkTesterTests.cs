@@ -12,26 +12,16 @@ namespace URLPerformanceTester.Tests.Models
         public void ListOfLinksTest()
         {
             //arrange
-            var tester = new URLTester();
-            var urls = new List<string>()
-            {
-                "https://habrahabr.ru/",
-                "https://www.google.com/",
-                "https://www.youtube.com/"
-            };
+            var tester = new UrlTester();
+            var url = "https://www.google.com/";
             //act
-            var results = urls.Select(url => tester.Test(url, 3)).ToList();
+            var result = tester.Test(url);
             //assert
-            Assert.True(results.Count == 3);
-            foreach (var result in results)
-            {
-                Assert.True(result.StatusCode > 0);
-                Assert.True(result.MinTime > 0);
-                Assert.True(result.MaxTime > 0);
-                Assert.True(result.AvgTime >= result.MinTime && result.AvgTime <= result.MaxTime);
-                Assert.True(!string.IsNullOrEmpty(result.URL));
-            }
-
+            Assert.True(result != null);
+            Assert.True(result.StatusCode > 0);
+            Assert.True(result.Time > 0);
+            Assert.True(!string.IsNullOrEmpty(result.Url));
         }
+
     }
 }

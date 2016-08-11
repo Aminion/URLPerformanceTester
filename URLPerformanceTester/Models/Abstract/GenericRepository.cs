@@ -5,10 +5,10 @@ using System.Linq.Expressions;
 
 namespace URLPerformanceTester.Models.Abstract
 {
-    public  class GenericRepository<C, T> : IGenericRepository<T> where T : class where C : DbContext, new()
+    public class GenericRepository<TC, T> : IGenericRepository<T> where T : class where TC : DbContext, new()
     {
-        protected C Context { get; set; }
-        public GenericRepository(C context) { Context = context; }
+        protected TC Context { get; set; }
+        public GenericRepository(TC context) { Context = context; }
         public virtual IQueryable<T> GetAll() => Context.Set<T>();
         public virtual IQueryable<T> FindBy(Expression<Func<T, bool>> predicate) => Context.Set<T>().Where(predicate);
         public virtual void Add(T entity) => Context.Set<T>().Add(entity);

@@ -48,6 +48,14 @@
       <HintPath>..\packages\Antlr.3.5.0.2\lib\Antlr3.Runtime.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Common.Logging, Version=3.3.1.0, Culture=neutral, PublicKeyToken=af08829b84f0328e, processorArchitecture=MSIL">
+      <HintPath>..\packages\Common.Logging.3.3.1\lib\net40\Common.Logging.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Common.Logging.Core, Version=3.3.1.0, Culture=neutral, PublicKeyToken=af08829b84f0328e, processorArchitecture=MSIL">
+      <HintPath>..\packages\Common.Logging.Core.3.3.1\lib\net40\Common.Logging.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
       <Private>True</Private>
@@ -66,6 +74,10 @@
     </Reference>
     <Reference Include="Hangfire.SqlServer, Version=1.6.2.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Hangfire.SqlServer.1.6.2\lib\net45\Hangfire.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Hangfire.Unity, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Hangfire.Unity.1.3.0\lib\net45\Hangfire.Unity.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.AspNet.Identity.Core, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -202,7 +214,6 @@
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
-    <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\UnityConfig.cs" />
     <Compile Include="App_Start\UnityMvcActivator.cs" />
@@ -213,6 +224,7 @@
     </Compile>
     <Compile Include="Infrastructure\AppUserManager.cs" />
     <Compile Include="Infrastructure\AppDbContext.cs" />
+    <Compile Include="Infrastructure\SitemapURLAttribute.cs" />
     <Compile Include="Migrations\201607082023361_Inital.cs" />
     <Compile Include="Migrations\201607082023361_Inital.Designer.cs">
       <DependentUpon>201607082023361_Inital.cs</DependentUpon>
@@ -237,23 +249,35 @@
     <Compile Include="Migrations\201607111925556_DateTime2.Designer.cs">
       <DependentUpon>201607111925556_DateTime2.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201608081416492_rel.cs" />
+    <Compile Include="Migrations\201608081416492_rel.Designer.cs">
+      <DependentUpon>201608081416492_rel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201608101425498_Simly.cs" />
+    <Compile Include="Migrations\201608101425498_Simly.Designer.cs">
+      <DependentUpon>201608101425498_Simly.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201608111452176_Simply.cs" />
+    <Compile Include="Migrations\201608111452176_Simply.Designer.cs">
+      <DependentUpon>201608111452176_Simply.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Abstract\GenericRepository.cs" />
+    <Compile Include="Models\Abstract\IBackgroundTaskManager.cs" />
     <Compile Include="Models\Abstract\IGenericRepository.cs" />
     <Compile Include="Models\Abstract\IURLTester.cs" />
     <Compile Include="Models\Abstract\IURLBackgroundTester.cs" />
-    <Compile Include="Models\Abstract\ISitemapDocumentReader.cs" />
-    <Compile Include="Models\Abstract\ISitemapURLExtractor.cs" />
+    <Compile Include="Models\Abstract\ISitemapExtractor.cs" />
+    <Compile Include="Models\Concrete\BackgroundTaskManager.cs" />
     <Compile Include="Models\Concrete\URLTester.cs" />
-    <Compile Include="Models\Concrete\SitemapDocumentReader.cs" />
     <Compile Include="Models\Concrete\SitemapURLExtractor.cs" />
-    <Compile Include="Models\Concrete\URLBackgroundTester.cs" />
-    <Compile Include="Models\Entities\SitemapTest.cs" />
-    <Compile Include="Models\Entities\URLTest.cs" />
+    <Compile Include="Models\Concrete\RequestBackgroundTester.cs" />
+    <Compile Include="Models\Entities\RequestTestSet.cs" />
+    <Compile Include="Models\Entities\RequestTest.cs" />
     <Compile Include="Models\Entities\AppUser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
-    <Compile Include="ViewModels\SitemapTestViewModels.cs" />
+    <Compile Include="ViewModels\RequestTestsSetViewModels.cs" />
     <Compile Include="ViewModels\URLTestResultViewModels.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -331,6 +355,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201607111925556_DateTime2.resx">
       <DependentUpon>201607111925556_DateTime2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201608081416492_rel.resx">
+      <DependentUpon>201608081416492_rel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201608101425498_Simly.resx">
+      <DependentUpon>201608101425498_Simly.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201608111452176_Simply.resx">
+      <DependentUpon>201608111452176_Simply.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

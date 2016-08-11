@@ -68,7 +68,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Models\LinkTesterTests.cs" />
-    <Compile Include="Models\SitemapDocumentReaderTests.cs" />
+    <Compile Include="Models\SitemapBackgroundTesterTests.cs" />
     <Compile Include="Models\SitemapLinksExtractorTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

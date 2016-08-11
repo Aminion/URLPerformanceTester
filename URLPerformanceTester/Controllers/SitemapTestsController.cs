@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using System.Web.Mvc;
 using System;
+using System.Net;
 using Microsoft.AspNet.Identity;
 using URLPerformanceTester.Infrastructure;
 using URLPerformanceTester.ViewModels;
@@ -11,68 +12,90 @@ using Hangfire;
 namespace URLPerformanceTester.Controllers
 {
     [Authorize]
-    public class SitemapTestsController : Controller
+    public class TestsController : Controller
     {
         private readonly AppUserManager _userManager;
-        public SitemapTestsController(AppUserManager userManager)
+        private AppUser _currentUser;
+        private AppUser CurrentUser => _currentUser ?? (_currentUser = _userManager.FindById(User.Identity.GetUserId()));
+        private readonly ISitemapExtractor _urlExtractor;
+        private readonly IBackgroundTaskManager<ISitemapBackgroundTester> _backgroundTaskManager;
+
+        public TestsController(AppUserManager userManager, ISitemapExtractor urlExtractor,
+            IBackgroundTaskManager<ISitemapBackgroundTester> backgroundTaskManager)
         {
             _userManager = userManager;
+            _urlExtractor = urlExtractor;
+            _backgroundTaskManager = backgroundTaskManager;
         }
+
         [HttpGet]
         public ActionResult Index()
         {
             var user = _userManager.FindById(User.Identity.GetUserId());
-            var result = user.SitemapTests.Select(st => new SitemapTestOverviewViewModel
+            var result = user.SitemapTests.Select(st => new RequestTestsSetOverviewViewModel
             {
                 Id = st.Id,
                 CreationTime = st.CreationTime,
-                SitemapURL = st.SitemapURL,
-                URLsCount = st.URLsCountToTest,
-                URLsTested = st.URLTests.Count
+                RequestUrl = st.SitemapUrl,
+                UrLsCount = st.UrLsCount,
+                UrLsTested = st.UrlTests.Count
             }
-            ).ToList();
+                ).ToList();
             return View(result);
         }
+
         [HttpGet]
         public ActionResult Create()
         {
-            return View(new SitemapTestViewModel());
+            return View(new RequestTestsSetViewModel());
         }
 
         [HttpPost]
-        public ActionResult Create(SitemapTestViewModel model)
+        public ActionResult Create(RequestTestsSetViewModel model)
         {
             if (ModelState.IsValid)
             {
-                var test = new SitemapTest() { SitemapURL = model.Url, CreationTime = DateTime.UtcNow };
-                BackgroundJob.Enqueue<IURLTester>(t => t.Test("", 4));
-                var user = _userManager.FindById(User.Identity.GetUserId());
-                user.SitemapTests.Add(test);
-                _userManager.Update(user);
-                return RedirectToAction("Details", new { id = test.Id });
+                try
+                {
+                    var urls = _urlExtractor.TryExtract(model.UrlWithSitemapPrefix).ToList();
+                    var test = new RequestTestSet()
+                    {
+                        SitemapUrl = model.Url,
+                        CreationTime = DateTime.UtcNow,
+                        UrLsCount = urls.Count
+                    };
+                    CurrentUser.SitemapTests.Add(test);
+                    _userManager.Update(CurrentUser);
+                    _backgroundTaskManager.AddTask(t => t.Perform(urls, test.Id));
+                    return RedirectToAction("Details", new {id = test.Id});
+                }
+                catch (WebException)
+                {
+                    ModelState.AddModelError("Sitemap Error", "Unable to read URL sitemap");
+                }
             }
             return View(model);
         }
+
         [HttpGet]
         public ActionResult Details(int id)
         {
-            var user = _userManager.FindById(User.Identity.GetUserId());
-            var test = user.SitemapTests.Find(t => t.Id == id);
+            var test = CurrentUser.SitemapTests.Find(t => t.Id == id);
             if (test == null) return new HttpNotFoundResult();
-            var model = new SitemapTestDetailsViewModel()
+            var model = new RequestTestsSetDetailsViewModel()
             {
                 CreationTime = test.CreationTime,
-                SitemapURL = test.SitemapURL,
-                URLsCount = test.URLsCountToTest,
-                URLsTested = test.URLTests.Count,
-                URLTestResults = test.URLTests.Select(t => new URLTestResultViewModel()
+                RequestUrl = test.SitemapUrl,
+                UrLsCount = test.UrLsCount,
+                UrLsTested = test.UrlTests.Count,
+                MinTime = test.MinTime,
+                MaxTime = test.MaxTime,
+                UrlTestResults = test.UrlTests.Select(t => new RequestTestViewModel()
                 {
-                    AvgTime = t.AvgTime,
-                    MinTime = t.MinTime,
-                    MaxTime = t.MaxTime,
+                    Time = t.Time,
                     StatusCode = t.StatusCode,
-                    URL = t.URL
-                }).ToList()
+                    Url = t.Url,
+                }).OrderByDescending(t => t.Time).ToList()
             };
             return View(model);
         }
