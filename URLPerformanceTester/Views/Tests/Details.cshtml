@@ -3,27 +3,50 @@
 @{
     ViewBag.Title = "Details";
 }
+
+@if(Model.UrLsTested != Model.UrlTestResults.Count){<meta http-equiv="refresh" content="3" />}
 <table class="table table-hover">
     <thead>
         <tr>
             <td class="col-md-2">Creation time</td>
             <td class="col-md-6">URL</td>
-            <td class="col-md-1">MinTime</td>
-            <td class="col-md-1">MaxTime</td>
-            <td class="col-md-2">Progress</td>
+            <td class="col-md-2">URL Count</td>
         </tr>
     </thead>
     <tbody>
         <tr>
             <th>@Model.CreationTime</th>
             <th><a>@Model.RequestUrl</a></th>
-            <th>@Model.MinTime</th>
-            <th>@Model.MaxTime</th>
-            <th>@Model.UrLsTested of @Model.UrLsCount</th>
+            <th> @Model.UrLsCount</th>
         </tr>
     </tbody>
 </table>
 
+<div id="chart" style="min-width: 310px; max-width: 1280px; height: 200px; margin: 0 auto"></div>
+
+<script>
+        $('#chart').highcharts({
+            chart: {
+                type: 'bar'
+            },
+            title: {
+                text: null
+            },
+            xAxis: {
+                categories: ['Min', 'Max', 'Mode'],
+                title: {
+                    text: null
+                }
+            },
+            credits: {
+                enabled: false
+            },
+            series: [{
+                name: "Time(ms)",
+                data: [@Model.MinTime, @Model.MaxTime, @Model.ModeTime]
+            }]
+        });
+</script>
 
 <table class="table table-hover">
     <thead>

@@ -1,6 +1,5 @@
 ﻿using System.Linq;
 using URLPerformanceTester.Models.Concrete;
-using System.Xml.Linq;
 using Xunit;
 
 namespace URLPerformanceTester.Tests.Models

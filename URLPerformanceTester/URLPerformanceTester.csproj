@@ -218,7 +218,7 @@
     <Compile Include="App_Start\UnityConfig.cs" />
     <Compile Include="App_Start\UnityMvcActivator.cs" />
     <Compile Include="Controllers\AccountController.cs" />
-    <Compile Include="Controllers\SitemapTestsController.cs" />
+    <Compile Include="Controllers\TestsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -261,14 +261,24 @@
     <Compile Include="Migrations\201608111452176_Simply.Designer.cs">
       <DependentUpon>201608111452176_Simply.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201608142018519_Analysis.cs" />
+    <Compile Include="Migrations\201608142018519_Analysis.Designer.cs">
+      <DependentUpon>201608142018519_Analysis.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201608142035377_Analysis1.cs" />
+    <Compile Include="Migrations\201608142035377_Analysis1.Designer.cs">
+      <DependentUpon>201608142035377_Analysis1.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Abstract\GenericRepository.cs" />
     <Compile Include="Models\Abstract\IBackgroundTaskManager.cs" />
     <Compile Include="Models\Abstract\IGenericRepository.cs" />
+    <Compile Include="Models\Abstract\ITestSetAnalizer.cs" />
     <Compile Include="Models\Abstract\IURLTester.cs" />
     <Compile Include="Models\Abstract\IURLBackgroundTester.cs" />
     <Compile Include="Models\Abstract\ISitemapExtractor.cs" />
     <Compile Include="Models\Concrete\BackgroundTaskManager.cs" />
+    <Compile Include="Models\Concrete\ApproximativeModeAlgorithm.cs" />
     <Compile Include="Models\Concrete\URLTester.cs" />
     <Compile Include="Models\Concrete\SitemapURLExtractor.cs" />
     <Compile Include="Models\Concrete\RequestBackgroundTester.cs" />
@@ -325,9 +335,9 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\SitemapTests\Index.cshtml" />
-    <Content Include="Views\SitemapTests\Create.cshtml" />
-    <Content Include="Views\SitemapTests\Details.cshtml" />
+    <Content Include="Views\Tests\Index.cshtml" />
+    <Content Include="Views\Tests\Create.cshtml" />
+    <Content Include="Views\Tests\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -364,6 +374,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201608111452176_Simply.resx">
       <DependentUpon>201608111452176_Simply.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201608142018519_Analysis.resx">
+      <DependentUpon>201608142018519_Analysis.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201608142035377_Analysis1.resx">
+      <DependentUpon>201608142035377_Analysis1.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

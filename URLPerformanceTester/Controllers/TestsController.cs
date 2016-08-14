@@ -1,13 +1,11 @@
 ﻿using System.Linq;
 using System.Web.Mvc;
 using System;
-using System.Net;
 using Microsoft.AspNet.Identity;
 using URLPerformanceTester.Infrastructure;
 using URLPerformanceTester.ViewModels;
 using URLPerformanceTester.Models.Entities;
 using URLPerformanceTester.Models.Abstract;
-using Hangfire;
 
 namespace URLPerformanceTester.Controllers
 {
@@ -55,8 +53,6 @@ namespace URLPerformanceTester.Controllers
         {
             if (ModelState.IsValid)
             {
-                try
-                {
                     var urls = _urlExtractor.TryExtract(model.UrlWithSitemapPrefix).ToList();
                     var test = new RequestTestSet()
                     {
@@ -67,12 +63,7 @@ namespace URLPerformanceTester.Controllers
                     CurrentUser.SitemapTests.Add(test);
                     _userManager.Update(CurrentUser);
                     _backgroundTaskManager.AddTask(t => t.Perform(urls, test.Id));
-                    return RedirectToAction("Details", new {id = test.Id});
-                }
-                catch (WebException)
-                {
-                    ModelState.AddModelError("Sitemap Error", "Unable to read URL sitemap");
-                }
+                    return RedirectToAction("Index");
             }
             return View(model);
         }
@@ -86,10 +77,11 @@ namespace URLPerformanceTester.Controllers
             {
                 CreationTime = test.CreationTime,
                 RequestUrl = test.SitemapUrl,
+                MaxTime = test.MaxTime,
+                MinTime = test.MinTime,
+                ModeTime = test.ModeTime,
                 UrLsCount = test.UrLsCount,
                 UrLsTested = test.UrlTests.Count,
-                MinTime = test.MinTime,
-                MaxTime = test.MaxTime,
                 UrlTestResults = test.UrlTests.Select(t => new RequestTestViewModel()
                 {
                     Time = t.Time,

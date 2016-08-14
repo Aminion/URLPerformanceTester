@@ -35,6 +35,7 @@ namespace URLPerformanceTester
             container.RegisterType<ISitemapExtractor, SitemapUrlExtractor>();
             container.RegisterType<IUrlTester, UrlTester>();
             container.RegisterType<ISitemapBackgroundTester, RequestBackgroundTester>();
+            container.RegisterType<IApproximativeModeAlgorithm, ApproximativeModeAlgorithm>();
             container
                 .RegisterType
                 <IBackgroundTaskManager<ISitemapBackgroundTester>, BackgroundTaskManager<ISitemapBackgroundTester>>();

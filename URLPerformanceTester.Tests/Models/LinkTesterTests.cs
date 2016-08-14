@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using URLPerformanceTester.Models.Concrete;
+﻿using URLPerformanceTester.Models.Concrete;
 
 using Xunit;
 

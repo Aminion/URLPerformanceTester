@@ -1,7 +1,6 @@
-﻿using System;
-using System.Globalization;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.Net;
+using System.Xml.Linq;
 
 namespace URLPerformanceTester.Infrastructure
 {
@@ -15,13 +14,10 @@ namespace URLPerformanceTester.Infrastructure
         public override bool IsValid(object value)
         {
             var url = value as string;
-            var request = WebRequest.CreateHttp(url);
             try
             {
-                using (var response = (HttpWebResponse) request.GetResponse())
-                {
+                    XDocument.Load(url);
                     return true;
-                }
             }
             catch (WebException ex)
             {
