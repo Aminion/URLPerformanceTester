@@ -16,7 +16,7 @@
     <tbody>
         <tr>
             <th>@Model.CreationTime</th>
-            <th><a>@Model.RequestUrl</a></th>
+            <th><a href="@Model.RequestUrl">@Model.RequestUrl</a></th>
             <th> @Model.UrLsCount</th>
         </tr>
     </tbody>
@@ -33,7 +33,7 @@
                 text: null
             },
             xAxis: {
-                categories: ['Min', 'Max', 'Mode'],
+                categories: ['Minimum', 'Maximum', 'Most results near'],
                 title: {
                     text: null
                 }
@@ -60,7 +60,7 @@
     @foreach (var urlTest in Model.UrlTestResults)
     {
         <tr>
-            <th>@urlTest.Url</th>
+            <th><a href="@urlTest.Url">@urlTest.Url</a></th>
             <th>@urlTest.Time</th>
             <th>@urlTest.StatusCode.ToString() (@((int) urlTest.StatusCode))</th>
         </tr>

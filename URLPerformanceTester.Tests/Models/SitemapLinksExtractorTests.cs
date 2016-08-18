@@ -10,7 +10,7 @@ namespace URLPerformanceTester.Tests.Models
         public void ExtractURLsTest()
         {
             //arrange
-            var url = "https://google.com/sitemap.xml";
+            var url = "https://translate.google.com/sitemap.xml";
             var extracter = new SitemapUrlExtractor();
             //act
             var result = extracter.TryExtract(url).ToList();

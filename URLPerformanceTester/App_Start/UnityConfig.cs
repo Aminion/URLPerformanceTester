@@ -20,10 +20,7 @@ namespace URLPerformanceTester
             return container;
         });
 
-        public static IUnityContainer GetConfiguredContainer()
-        {
-            return Container.Value;
-        }
+        public static IUnityContainer GetConfiguredContainer() => Container.Value;
 
         public static void RegisterTypes(IUnityContainer container)
         {

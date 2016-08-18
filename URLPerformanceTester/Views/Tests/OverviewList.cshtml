@@ -1,0 +1,45 @@
+﻿@{Layout = null;}
+@model List<URLPerformanceTester.ViewModels.RequestTestsSetOverviewViewModel>
+@if (Model.Any())
+{
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <td class="col-md-2">Creation time</td>
+                <td class="col-md-6">URL</td>
+                <td class="col-md-2">Progress</td>
+                <td class="col-md-1">Status</td>
+            </tr>
+        </thead>
+        <tbody>
+
+            @foreach (var testModel in Model)
+            {
+                <tr>
+                    <th><a href="@testModel.RequestUrl">@testModel.RequestUrl</a></th>
+                    <th>@testModel.UrLsTested of @testModel.UrLsCount</th>
+                    <th>
+                        @if (testModel.IsCompleted)
+                    {
+                            <div>Completed</div>
+                        }
+                        else
+                        {
+                            <div>Perfoming</div>
+                        }
+                    </th>
+                    <th>
+                        @if (testModel.UrLsCount == testModel.UrLsTested)
+                    {
+                            @Html.ActionLink("View result", "Details", new { id = testModel.Id })
+                        }
+                    </th>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <div>List is empty, @Html.ActionLink("Click to create test.", "Create")</div>
+}

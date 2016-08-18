@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Net;
+using System.Xml;
 using System.Xml.Linq;
 
 namespace URLPerformanceTester.Infrastructure
@@ -8,7 +9,7 @@ namespace URLPerformanceTester.Infrastructure
     {
         public SitemapUrlAttribute()
         {
-            ErrorMessage = "URL doesn't contains sitemap file";
+            ErrorMessage = "URL doesn't contains  sitemap file";
         }
 
         public override bool IsValid(object value)
@@ -21,6 +22,12 @@ namespace URLPerformanceTester.Infrastructure
             }
             catch (WebException ex)
             {
+                ErrorMessage = "URL doesn't contains  sitemap file";
+                return false;
+            }
+            catch (XmlException ex)
+            {
+                ErrorMessage = "Sitemap from URL is incorrect";
                 return false;
             }
         }

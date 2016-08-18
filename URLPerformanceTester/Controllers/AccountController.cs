@@ -39,10 +39,10 @@ namespace URLPerformanceTester.Controllers
             }
             var ident = await UserManager.CreateIdentityAsync(user, DefaultAuthenticationTypes.ApplicationCookie);
             AuthManager.SignOut();
-            AuthManager.SignIn(new AuthenticationProperties { IsPersistent = false }, ident);
-
+            AuthManager.SignIn(new AuthenticationProperties {IsPersistent = false}, ident);
             return new RedirectResult(returnUrl);
         }
+
         private string CookieStoredUserId
         {
             get

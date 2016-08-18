@@ -30,7 +30,7 @@ namespace URLPerformanceTester.Models.Concrete
                 if (urlTest.Time > maxTime) maxTime = urlTest.Time;
                 if (urlTest.Time < minTime || minTime == 0) minTime = urlTest.Time;
                 sitemapTest.UrlTests.Add(urlTest);
-
+                _sitemapTestsRepo.Save();
             }
             sitemapTest.MinTime = minTime;
             sitemapTest.MaxTime = maxTime;

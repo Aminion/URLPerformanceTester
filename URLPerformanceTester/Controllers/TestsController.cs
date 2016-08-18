@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using System.Web.Mvc;
 using System;
+using System.Web;
 using Microsoft.AspNet.Identity;
 using URLPerformanceTester.Infrastructure;
 using URLPerformanceTester.ViewModels;
@@ -29,17 +30,23 @@ namespace URLPerformanceTester.Controllers
         [HttpGet]
         public ActionResult Index()
         {
-            var user = _userManager.FindById(User.Identity.GetUserId());
-            var result = user.SitemapTests.Select(st => new RequestTestsSetOverviewViewModel
-            {
-                Id = st.Id,
-                CreationTime = st.CreationTime,
-                RequestUrl = st.SitemapUrl,
-                UrLsCount = st.UrLsCount,
-                UrLsTested = st.UrlTests.Count
-            }
-                ).ToList();
-            return View(result);
+          
+                return View("Index",model:CurrentUser.Id);
+        }
+        public ActionResult OverviewList(string id)
+        {
+            Response.Cache.SetCacheability(HttpCacheability.NoCache);
+            var result =
+                CurrentUser.SitemapTests.OrderByDescending(st => st.CreationTime)
+                    .Select(st => new RequestTestsSetOverviewViewModel
+                    {
+                        Id = st.Id,
+                        CreationTime = st.CreationTime,
+                        RequestUrl = st.SitemapUrl,
+                        UrLsCount = st.UrLsCount,
+                        UrLsTested = st.UrlTests.Count
+                    }).ToList();
+            return PartialView("OverviewList", result);
         }
 
         [HttpGet]

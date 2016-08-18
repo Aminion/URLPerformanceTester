@@ -32,14 +32,14 @@ namespace URLPerformanceTester.Tests.Models
 
             var urlTesterMock = new Mock<IUrlTester>();
             urlTesterMock.Setup(tester => tester.Test(It.IsAny<string>()))
-                .Returns((string url, int times) => new RequestTest() {Url = url});
+                .Returns((string url) => new RequestTest() {Url = url});
 
-            var backgroundTester = new RequestBackgroundTester(sitemapRepoMock.Object, urlTesterMock.Object);
+            var backgroundTester = new RequestBackgroundTester(sitemapRepoMock.Object, urlTesterMock.Object, new ApproximativeModeAlgorithm());
             //act
             backgroundTester.Perform(new[] {"1", "2", "3"}, 1);
             //assert
             Assert.True(test.UrlTests.Count==3);
-            Assert.True(savedTimes == test.UrlTests.Count);
+            Assert.True(savedTimes == test.UrlTests.Count+1);
         }
     }
 }
