@@ -82,7 +82,7 @@ namespace URLPerformanceTester.Controllers
             if (test == null) return new HttpNotFoundResult();
             var model = new RequestTestsSetDetailsViewModel()
             {
-                CreationTime = test.CreationTime,
+                CreationTime = TimeZone.CurrentTimeZone.ToLocalTime(test.CreationTime),
                 RequestUrl = test.SitemapUrl,
                 MaxTime = test.MaxTime,
                 MinTime = test.MinTime,
