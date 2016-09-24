@@ -3,6 +3,7 @@ using System.Web.Mvc;
 using System;
 using System.Web;
 using Microsoft.AspNet.Identity;
+using System.Collections.Generic;
 using URLPerformanceTester.Infrastructure;
 using URLPerformanceTester.ViewModels;
 using URLPerformanceTester.Models.Entities;

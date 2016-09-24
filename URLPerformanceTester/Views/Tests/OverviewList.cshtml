@@ -16,6 +16,7 @@
             @foreach (var testModel in Model)
             {
                 <tr>
+                    <th>@testModel.CreationTime</th>
                     <th><a href="@testModel.RequestUrl">@testModel.RequestUrl</a></th>
                     <th>@testModel.UrLsTested of @testModel.UrLsCount</th>
                     <th>
