@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using URLPerformanceTester.Models.Concrete;
+﻿using URLPerformanceTester.Models.Concrete;
 using Xunit;
 
 namespace URLPerformanceTester.Tests.Models

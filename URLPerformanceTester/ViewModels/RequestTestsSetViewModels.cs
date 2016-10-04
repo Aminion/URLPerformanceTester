@@ -2,16 +2,14 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using URLPerformanceTester.Infrastructure;
-using URLPerformanceTester.Models.Entities;
 
 namespace URLPerformanceTester.ViewModels
 {
     public class RequestTestsSetViewModel
     {
-        [Url]       
-        public string Url { get; set; }
-        [SitemapUrl]
-        public string UrlWithSitemapPrefix => Url.TrimEnd('/') + "/sitemap.xml";
+        [Url] 
+        [AccessibleURL]      
+        public string Url { get; set; }     
     }
 
     public class RequestTestsSetOverviewViewModel

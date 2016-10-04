@@ -1,8 +1,7 @@
 namespace URLPerformanceTester.Migrations
 {
-    using System;
     using System.Data.Entity.Migrations;
-    
+
     public partial class Analysis : DbMigration
     {
         public override void Up()

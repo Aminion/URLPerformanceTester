@@ -2,8 +2,8 @@
 
 namespace URLPerformanceTester.Models.Abstract
 {
-  public   interface ISitemapExtractor
+    public  interface ISitemapBuilder
     {
-        IEnumerable<string> TryExtract(string url);
+        IEnumerable<string> BuildSitemap(string sitemapUrl);
     }
 }

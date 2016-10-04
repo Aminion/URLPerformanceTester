@@ -29,8 +29,11 @@ namespace URLPerformanceTester
             container.RegisterType<IUserStore<AppUser>, UserStore<AppUser>>(
                 new InjectionConstructor(typeof(AppDbContext)));
             container.RegisterType<IGenericRepository<RequestTestSet>, GenericRepository<AppDbContext, RequestTestSet>>();
-            container.RegisterType<ISitemapExtractor, SitemapUrlExtractor>();
+            container.RegisterType<ISitemapReader, SitemapReader>();
             container.RegisterType<IUrlTester, UrlTester>();
+            container.RegisterType<IHtmlLinksExtractor, HtmlLinksExtractor>();
+            container.RegisterType<ISitemapBuilder, SitemapBuiler>();
+            container.RegisterType<ISitemapDeterminant, SitemapDeterminant>();
             container.RegisterType<ISitemapBackgroundTester, RequestBackgroundTester>();
             container.RegisterType<IApproximativeModeAlgorithm, ApproximativeModeAlgorithm>();
             container

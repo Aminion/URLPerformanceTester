@@ -3,7 +3,6 @@ using System.Web.Mvc;
 using System;
 using System.Web;
 using Microsoft.AspNet.Identity;
-using System.Collections.Generic;
 using URLPerformanceTester.Infrastructure;
 using URLPerformanceTester.ViewModels;
 using URLPerformanceTester.Models.Entities;
@@ -17,14 +16,14 @@ namespace URLPerformanceTester.Controllers
         private readonly AppUserManager _userManager;
         private AppUser _currentUser;
         private AppUser CurrentUser => _currentUser ?? (_currentUser = _userManager.FindById(User.Identity.GetUserId()));
-        private readonly ISitemapExtractor _urlExtractor;
+        private readonly ISitemapDeterminant _urlDeterminant;
         private readonly IBackgroundTaskManager<ISitemapBackgroundTester> _backgroundTaskManager;
 
-        public TestsController(AppUserManager userManager, ISitemapExtractor urlExtractor,
+        public TestsController(AppUserManager userManager, ISitemapDeterminant urlDeterminant,
             IBackgroundTaskManager<ISitemapBackgroundTester> backgroundTaskManager)
         {
             _userManager = userManager;
-            _urlExtractor = urlExtractor;
+            _urlDeterminant = urlDeterminant;
             _backgroundTaskManager = backgroundTaskManager;
         }
 
@@ -61,7 +60,7 @@ namespace URLPerformanceTester.Controllers
         {
             if (ModelState.IsValid)
             {
-                    var urls = _urlExtractor.TryExtract(model.UrlWithSitemapPrefix).ToList();
+                    var urls = _urlDeterminant.DeterminateSitemap(model.Url).ToList();
                     var test = new RequestTestSet()
                     {
                         SitemapUrl = model.Url,
