@@ -17,9 +17,9 @@ namespace URLPerformanceTester.Models.Concrete
         public IEnumerable<Uri> DeterminateSitemap(Uri uri)
         {
             var sitemapUrl = new Uri(uri, "/sitemap.xml");
-          //  IEnumerable<Uri> urls = null;
-         //   if (_sitemapReader.TryReadSitemap(sitemapUrl, out urls)) return urls;
-          //  else
+            IEnumerable<Uri> urls = null;
+            if (_sitemapReader.TryReadSitemap(sitemapUrl, out urls)) return urls;
+            else
                 return _sitemapBuilder.BuildSitemap(uri);
         }
     }
