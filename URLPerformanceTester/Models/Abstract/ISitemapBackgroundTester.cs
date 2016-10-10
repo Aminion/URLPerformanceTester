@@ -3,8 +3,8 @@ using System.Collections.Generic;
 
 namespace URLPerformanceTester.Models.Abstract
 {
-    public interface ISitemapDeterminant
+    public interface ISitemapBackgroundTester
     {
-        IEnumerable<Uri> DeterminateSitemap(Uri uri);
+        void Perform(Uri uri, int sitemapTestId);
     }
 }

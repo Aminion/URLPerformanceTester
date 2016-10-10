@@ -13,32 +13,21 @@ namespace URLPerformanceTester.Models.Concrete
         {
             _linksExtractor = linksExtractor;
         }
-        public IEnumerable<string> BuildSitemap(string url)
+        public IEnumerable<Uri> BuildSitemap(Uri baseUri)
         {
-            var urlsToTest = new List<string>() { url };
-            var result = new HashSet<string>() { url };
+            var urlsToTest = new List<Uri>() { baseUri };
+            var result = new HashSet<Uri>() { baseUri };
             while (urlsToTest.Any())
             {
                 var current = urlsToTest.LastOrDefault();
                 urlsToTest.Remove(current);
-                var urls = _linksExtractor.Extract(current);
-                if (urls == null) continue;
-                var filteredUrls = urls
-                    .Where(u => !isNavigationLink(u) && isInnerUrl(u, url))
-                    .Select(u => ExtendUrlIfLocal(u, url))
-                    .Where(u => !result.Contains(u));
-                urlsToTest.AddRange(filteredUrls);
-                foreach (var u in filteredUrls) result.Add(u);
+                var uris = _linksExtractor.Extract(current, baseUri);                   
+                if (uris == null) continue;
+                var uniqUris = uris.Where(u => !result.Contains(u));
+                urlsToTest.AddRange(uniqUris.Where(u=>!u.IsFile));
+                foreach (var u in uniqUris) result.Add(u);
             }
             return result;
         }
-        private string ExtendUrlIfLocal(string url, string baseUrl)
-        {
-            if (url.StartsWith("http://") || url.StartsWith("htts://")) return url;
-            return new Uri(new Uri(baseUrl), url).AbsoluteUri;
-        }
-        private bool isInnerUrl(string url, string adress) =>
-             url.StartsWith(adress) || url.StartsWith("/");
-        private bool isNavigationLink(string url) => url.Contains("#");
     }
 }

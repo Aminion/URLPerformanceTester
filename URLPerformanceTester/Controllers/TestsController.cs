@@ -16,14 +16,12 @@ namespace URLPerformanceTester.Controllers
         private readonly AppUserManager _userManager;
         private AppUser _currentUser;
         private AppUser CurrentUser => _currentUser ?? (_currentUser = _userManager.FindById(User.Identity.GetUserId()));
-        private readonly ISitemapDeterminant _urlDeterminant;
         private readonly IBackgroundTaskManager<ISitemapBackgroundTester> _backgroundTaskManager;
 
-        public TestsController(AppUserManager userManager, ISitemapDeterminant urlDeterminant,
+        public TestsController(AppUserManager userManager,
             IBackgroundTaskManager<ISitemapBackgroundTester> backgroundTaskManager)
         {
             _userManager = userManager;
-            _urlDeterminant = urlDeterminant;
             _backgroundTaskManager = backgroundTaskManager;
         }
 
@@ -60,17 +58,16 @@ namespace URLPerformanceTester.Controllers
         {
             if (ModelState.IsValid)
             {
-                    var urls = _urlDeterminant.DeterminateSitemap(model.Url).ToList();
-                    var test = new RequestTestSet()
-                    {
-                        SitemapUrl = model.Url,
-                        CreationTime = DateTime.UtcNow,
-                        UrLsCount = urls.Count
-                    };
-                    CurrentUser.SitemapTests.Add(test);
-                    _userManager.Update(CurrentUser);
-                    _backgroundTaskManager.AddTask(t => t.Perform(urls, test.Id));
-                    return RedirectToAction("Index");
+
+                var test = new RequestTestSet()
+                {
+                    SitemapUrl = model.Url,
+                    CreationTime = DateTime.UtcNow
+                };
+                CurrentUser.SitemapTests.Add(test);
+                _userManager.Update(CurrentUser);
+                _backgroundTaskManager.AddTask(t => t.Perform(new Uri(test.SitemapUrl), test.Id));
+                return RedirectToAction("Index");
             }
             return View(model);
         }

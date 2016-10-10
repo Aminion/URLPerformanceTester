@@ -1,9 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace URLPerformanceTester.Models.Abstract
 {
     public  interface ISitemapBuilder
     {
-        IEnumerable<string> BuildSitemap(string sitemapUrl);
+        IEnumerable<Uri> BuildSitemap(Uri sitemapUri);
     }
 }

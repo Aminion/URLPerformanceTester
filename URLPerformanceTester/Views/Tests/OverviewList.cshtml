@@ -30,7 +30,7 @@
                         }
                     </th>
                     <th>
-                        @if (testModel.UrLsCount == testModel.UrLsTested)
+                        @if (testModel.IsCompleted)
                     {
                             @Html.ActionLink("View result", "Details", new { id = testModel.Id })
                         }

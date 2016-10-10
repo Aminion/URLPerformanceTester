@@ -10,7 +10,7 @@ using Xunit;
 
 namespace URLPerformanceTester.Tests.Models
 {
-   public  class SitemapBackgroundTesterTests
+    public class SitemapBackgroundTesterTests
     {
         [Fact]
         void PerformTest()
@@ -21,25 +21,26 @@ namespace URLPerformanceTester.Tests.Models
                 Id = 1,
                 UrlTests = new List<RequestTest>()
             };
-            var testsList = new List<RequestTestSet>() {test};
+            var testsList = new List<RequestTestSet>() { test };
 
             var savedTimes = 0;
             var sitemapRepoMock = new Mock<IGenericRepository<RequestTestSet>>();
             sitemapRepoMock.Setup(repo => repo.FindBy(It.IsAny<Expression<Func<RequestTestSet, bool>>>()))
                 .Returns((Expression<Func<RequestTestSet, bool>> exp) => testsList.AsQueryable().Where(exp));
             sitemapRepoMock.Setup(repo => repo.Save()).Callback((() => savedTimes++));
-            
+
 
             var urlTesterMock = new Mock<IUrlTester>();
-            urlTesterMock.Setup(tester => tester.Test(It.IsAny<string>()))
-                .Returns((string url) => new RequestTest() {Url = url});
+            urlTesterMock.Setup(tester => tester.Test(It.IsAny<Uri>()))
+                .Returns((string url) => new RequestTest() { Url = url });
 
-            var backgroundTester = new RequestBackgroundTester(sitemapRepoMock.Object, urlTesterMock.Object, new ApproximativeModeAlgorithm());
+            var backgroundTester = new SitemapBackgroundTester(sitemapRepoMock.Object, urlTesterMock.Object, new ApproximativeModeAlgorithm(),
+                new SitemapDeterminant(new SitemapReader(), new SitemapBuiler(new HtmlLinksExtractor())));
             //act
-            backgroundTester.Perform(new[] {"1", "2", "3"}, 1);
+            backgroundTester.Perform(new Uri("http://mathus.ru"), 1);
             //assert
-            Assert.True(test.UrlTests.Count==3);
-            Assert.True(savedTimes == test.UrlTests.Count+1);
+            Assert.True(test.UrlTests.Count == 3);
+            Assert.True(savedTimes == test.UrlTests.Count + 1);
         }
     }
 }

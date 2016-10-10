@@ -7,9 +7,9 @@ namespace URLPerformanceTester.ViewModels
 {
     public class RequestTestsSetViewModel
     {
-        [Url] 
-        [AccessibleURL]      
-        public string Url { get; set; }     
+        [Url]
+        [AccessibleURL]
+        public string Url { get; set; }
     }
 
     public class RequestTestsSetOverviewViewModel
@@ -19,7 +19,7 @@ namespace URLPerformanceTester.ViewModels
         public DateTime CreationTime { get; set; }
         public int UrLsCount { get; set; }
         public int UrLsTested { get; set; }
-        public bool IsCompleted => UrLsCount == UrLsTested;
+        public bool IsCompleted => UrLsCount > 0 && UrLsCount == UrLsTested;
     }
 
     public class RequestTestsSetDetailsViewModel

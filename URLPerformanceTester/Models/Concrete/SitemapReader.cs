@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Xml;
@@ -13,15 +14,15 @@ namespace URLPerformanceTester.Models.Concrete
         private IEnumerable<string> ExtractUrLs(XDocument sitemap)
             => sitemap.Descendants().Where(e => e.Name.LocalName == "loc").Select(e => e.Value);
 
-        public bool TryReadSitemap(string sitemapUrl, out IEnumerable<string> sitemapUrls)
+        public bool TryReadSitemap(Uri sitemapUrl, out IEnumerable<Uri> sitemapUrls)
         {
             try
             {
-                var doc = XDocument.Load(sitemapUrl);
+                var doc = XDocument.Load(sitemapUrl.ToString());
                 var rootname = RootName(doc);
                 if (rootname == "urlset")
                 {
-                    sitemapUrls = ExtractUrLs(doc);
+                    sitemapUrls = ExtractUrLs(doc).Select(l=>new Uri(l));
                     return true;
                 }
                 else if (rootname == "sitemapindex")
@@ -33,16 +34,16 @@ namespace URLPerformanceTester.Models.Concrete
                         var ext = ExtractUrLs(XDocument.Load(url));
                         result.AddRange(ext);
                     }
-                    sitemapUrls = result;
+                    sitemapUrls = result.Select(l => new Uri(l));
                     return true;
                 }
             }
-            catch (WebException ex)
+            catch (WebException)
             {
                 sitemapUrls = null;
                 return false;
             }
-            catch (XmlException ex)
+            catch (XmlException)
             {
                 sitemapUrls = null;
                 return false;

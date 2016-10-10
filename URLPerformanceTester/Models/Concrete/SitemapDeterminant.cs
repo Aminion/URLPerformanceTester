@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using URLPerformanceTester.Models.Abstract;
 
 namespace URLPerformanceTester.Models.Concrete
@@ -13,12 +14,13 @@ namespace URLPerformanceTester.Models.Concrete
             _sitemapBuilder = sitemapBuilder;
         }
 
-        public IEnumerable<string> DeterminateSitemap(string url)
+        public IEnumerable<Uri> DeterminateSitemap(Uri uri)
         {
-            var sitemapUrl = url.TrimEnd('/') + "/sitemap.xml";
-            IEnumerable<string> urls = null;
-            if (!_sitemapReader.TryReadSitemap(sitemapUrl, out urls)) return urls;
-            else return _sitemapBuilder.BuildSitemap(url);
+            var sitemapUrl = new Uri(uri, "/sitemap.xml");
+          //  IEnumerable<Uri> urls = null;
+         //   if (_sitemapReader.TryReadSitemap(sitemapUrl, out urls)) return urls;
+          //  else
+                return _sitemapBuilder.BuildSitemap(uri);
         }
     }
 }

@@ -34,7 +34,7 @@ namespace URLPerformanceTester
             container.RegisterType<IHtmlLinksExtractor, HtmlLinksExtractor>();
             container.RegisterType<ISitemapBuilder, SitemapBuiler>();
             container.RegisterType<ISitemapDeterminant, SitemapDeterminant>();
-            container.RegisterType<ISitemapBackgroundTester, RequestBackgroundTester>();
+            container.RegisterType<ISitemapBackgroundTester, SitemapBackgroundTester>();
             container.RegisterType<IApproximativeModeAlgorithm, ApproximativeModeAlgorithm>();
             container
                 .RegisterType
