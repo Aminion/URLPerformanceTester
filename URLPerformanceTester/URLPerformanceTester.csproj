@@ -153,14 +153,6 @@
       <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="ScrapySharp.Core, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ScrapySharp.2.6.2\lib\net45\ScrapySharp.Core.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="ScrapySharpAsync, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ScrapySharp.2.6.2\lib\net45\ScrapySharpAsync.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -298,6 +290,7 @@
     <Compile Include="Models\Abstract\IURLTester.cs" />
     <Compile Include="Models\Abstract\ISitemapBackgroundTester.cs" />
     <Compile Include="Models\Abstract\ISitemapExtractor.cs" />
+    <Compile Include="Models\Abstract\IHttpWebRequestCreator.cs" />
     <Compile Include="Models\Concrete\BackgroundTaskManager.cs" />
     <Compile Include="Models\Concrete\ApproximativeModeAlgorithm.cs" />
     <Compile Include="Models\Concrete\HtmlLinksExtractor.cs" />
@@ -306,6 +299,7 @@
     <Compile Include="Models\Concrete\URLTester.cs" />
     <Compile Include="Models\Concrete\SitemapReader.cs" />
     <Compile Include="Models\Concrete\SitemapBackgroundTester.cs" />
+    <Compile Include="Models\Concrete\HttpWebRequestCreator.cs" />
     <Compile Include="Models\Entities\RequestTestSet.cs" />
     <Compile Include="Models\Entities\RequestTest.cs" />
     <Compile Include="Models\Entities\AppUser.cs" />

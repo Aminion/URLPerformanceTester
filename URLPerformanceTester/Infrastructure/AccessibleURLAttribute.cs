@@ -1,9 +1,11 @@
-﻿using System;
+﻿using Microsoft.Practices.Unity;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Net;
 using System.Web;
+using URLPerformanceTester.Models.Concrete;
 
 namespace URLPerformanceTester.Infrastructure
 {
@@ -19,7 +21,7 @@ namespace URLPerformanceTester.Infrastructure
             if (url == null) return false;
             try
             {
-                var request = (HttpWebRequest)WebRequest.Create(url);
+                var request = new HttpWebRequestCreator().Create(new Uri(url));
                 request.Method = "HEAD";
                 using (var response = (HttpWebResponse)request.GetResponse())
                 {

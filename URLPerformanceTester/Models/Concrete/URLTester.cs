@@ -8,16 +8,17 @@ namespace URLPerformanceTester.Models.Concrete
 {
     public class UrlTester : IUrlTester
     {
-
+        IHttpWebRequestCreator _requestCreator;
+        public UrlTester(IHttpWebRequestCreator requestCreator)
+        {
+            _requestCreator = requestCreator;
+        }
         public RequestTest Test(Uri uri)
         {
             var test = new RequestTest() { Url = uri.ToString() };
             var sw = new Stopwatch();
-            var request = WebRequest.CreateHttp(uri);
-            request.AllowAutoRedirect = true;
+            var request = _requestCreator.Create(uri);
             request.Method = "HEAD";
-            request.Headers.Add("Accept-Language", "en-US,en;q=0.5");
-            request.Proxy = null;
             try
             {
                 sw.Start();
@@ -32,10 +33,6 @@ namespace URLPerformanceTester.Models.Concrete
             {
                 test.StatusCode = ((HttpWebResponse)ex.Response).StatusCode;
                 return test;
-            }
-            finally
-            {               
-           //     GC.Collect(2);
             }
         }
     }

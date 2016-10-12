@@ -1,7 +1,4 @@
 ﻿using HtmlAgilityPack;
-using ScrapySharp.Extensions;
-using ScrapySharp.Html;
-using ScrapySharp.Network;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,12 +9,14 @@ namespace URLPerformanceTester.Models.Concrete
 {
     public class HtmlLinksExtractor : IHtmlLinksExtractor
     {
+        IHttpWebRequestCreator _requestCreator;
+        public HtmlLinksExtractor(IHttpWebRequestCreator requestCreator)
+        {
+            _requestCreator = requestCreator;
+        }
         public IEnumerable<Uri> Extract(Uri uri, Uri baseUri)
         {
-            var request = WebRequest.CreateHttp(uri);
-            request.AllowAutoRedirect = true;
-            request.Proxy = null;
-            request.Headers.Add("Accept-Language", "en-US,en;q=0.5");
+            var request = _requestCreator.Create(uri);
             try
             {
                 using (var response = request.GetResponse())

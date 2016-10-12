@@ -28,6 +28,7 @@ namespace URLPerformanceTester
                 new InjectionFactory(c => HttpContext.Current.GetOwinContext().Authentication));
             container.RegisterType<IUserStore<AppUser>, UserStore<AppUser>>(
                 new InjectionConstructor(typeof(AppDbContext)));
+            container.RegisterType<IHttpWebRequestCreator, HttpWebRequestCreator>();
             container.RegisterType<IGenericRepository<RequestTestSet>, GenericRepository<AppDbContext, RequestTestSet>>();
             container.RegisterType<ISitemapReader, SitemapReader>();
             container.RegisterType<IUrlTester, UrlTester>();
