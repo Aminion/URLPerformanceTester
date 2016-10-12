@@ -28,8 +28,7 @@ namespace URLPerformanceTester.Controllers
         [HttpGet]
         public ActionResult Index()
         {
-          
-                return View("Index",model:CurrentUser.Id);
+            return View("Index", model: CurrentUser.Id);
         }
         public ActionResult OverviewList(string id)
         {

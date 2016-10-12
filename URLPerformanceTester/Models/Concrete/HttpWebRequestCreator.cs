@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net;
-using System.Web;
+using URLPerformanceTester.Infrastructure;
 using URLPerformanceTester.Models.Abstract;
 
 namespace URLPerformanceTester.Models.Concrete
@@ -13,8 +11,8 @@ namespace URLPerformanceTester.Models.Concrete
         {
             var request = WebRequest.CreateHttp(uri);
             request.AllowAutoRedirect = true;
-            request.UserAgent = "testerbot";
-            request.Headers.Add("Accept-Language", "en-US,en;q=0.5");
+            request.UserAgent = AppSettings.RequestUserAgent;
+            request.Headers.Add("Accept-Language", AppSettings.RequestAcceptLanguage);
             request.Proxy = null;
             return request;
         }

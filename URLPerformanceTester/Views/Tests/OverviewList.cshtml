@@ -18,10 +18,19 @@
                 <tr>
                     <th>@testModel.CreationTime</th>
                     <th><a href="@testModel.RequestUrl">@testModel.RequestUrl</a></th>
-                    <th>@testModel.UrLsTested of @testModel.UrLsCount</th>
+                    <th>
+                    @if (testModel.UrLsCount == 0)
+                    {
+                       <div>Building Sitemap</div> 
+                    }
+                    else
+                    {
+                       <div>@testModel.UrLsTested of @testModel.UrLsCount</div> 
+                    }      
+                    </th>
                     <th>
                         @if (testModel.IsCompleted)
-                    {
+                        {
                             <div>Completed</div>
                         }
                         else
@@ -31,7 +40,7 @@
                     </th>
                     <th>
                         @if (testModel.IsCompleted)
-                    {
+                        {
                             @Html.ActionLink("View result", "Details", new { id = testModel.Id })
                         }
                     </th>

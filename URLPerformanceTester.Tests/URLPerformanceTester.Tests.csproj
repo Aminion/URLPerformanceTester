@@ -142,10 +142,6 @@
   <ItemGroup>
     <Compile Include="Infrastructure\AccessibleURLAttributeTests.cs" />
     <Compile Include="Models\ApproximativeModeAlgorythmTests.cs" />
-    <Compile Include="Models\HtmlLinksExtractorTests.cs" />
-    <Compile Include="Models\LinkTesterTests.cs" />
-    <Compile Include="Models\SitemapBackgroundTesterTests.cs" />
-    <Compile Include="Models\SitemapBuilerTests.cs" />
     <Compile Include="Models\SitemapReaderTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

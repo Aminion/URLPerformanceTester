@@ -21,8 +21,8 @@ namespace URLPerformanceTester
                 AuthenticationType = DefaultAuthenticationTypes.ApplicationCookie,
                 LoginPath = new PathString("/Account/Login"),
             });
-            GlobalConfiguration.Configuration.UseSqlServerStorage("HangfireTasksDbConnection",
-                new SqlServerStorageOptions {QueuePollInterval = TimeSpan.FromSeconds(1)});
+            GlobalConfiguration.Configuration.UseSqlServerStorage("DefaultConnection",
+                new SqlServerStorageOptions {QueuePollInterval = TimeSpan.FromSeconds(15)});
             GlobalConfiguration.Configuration.UseUnityActivator(UnityConfig.GetConfiguredContainer());
             app.UseHangfireDashboard();
             app.UseHangfireServer();

@@ -1,6 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
+using URLPerformanceTester.Infrastructure;
 using URLPerformanceTester.Models.Abstract;
 using URLPerformanceTester.Models.Entities;
 
@@ -32,6 +32,8 @@ namespace URLPerformanceTester.Models.Concrete
             var minTime = 0;
             var maxTime = 0;
             RequestTest urlTest;
+            var dataPortion = 0;
+            var dataPortionSize = AppSettings.BackgroudTesterDataPortionSize;
             foreach (var url in sitemapUrLs)
             {
                 urlTest = _urlTester.Test(url);
@@ -40,8 +42,14 @@ namespace URLPerformanceTester.Models.Concrete
                     if (urlTest.Time > maxTime) maxTime = urlTest.Time;
                     if (urlTest.Time < minTime || minTime == 0) minTime = urlTest.Time;
                 }
+
                 sitemapTest.UrlTests.Add(urlTest);
-                _sitemapTestsRepo.Save();
+                dataPortion++;
+                if (dataPortion == dataPortionSize)
+                {
+                    _sitemapTestsRepo.Save();
+                    dataPortion = 0;
+                }
             }
             sitemapTest.MinTime = minTime;
             sitemapTest.MaxTime = maxTime;

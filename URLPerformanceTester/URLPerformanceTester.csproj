@@ -232,6 +232,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Infrastructure\AccessibleURLAttribute.cs" />
+    <Compile Include="Infrastructure\AppSettings.cs" />
     <Compile Include="Infrastructure\AppUserManager.cs" />
     <Compile Include="Infrastructure\AppDbContext.cs" />
     <Compile Include="Migrations\201607082023361_Inital.cs" />
