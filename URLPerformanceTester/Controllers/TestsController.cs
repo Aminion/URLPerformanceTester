@@ -60,7 +60,7 @@ namespace URLPerformanceTester.Controllers
 
                 var test = new RequestTestSet()
                 {
-                    SitemapUrl = model.Url,
+                    SitemapUrl = model.Uri.ToString(),
                     CreationTime = DateTime.UtcNow
                 };
                 CurrentUser.SitemapTests.Add(test);

@@ -7,28 +7,37 @@ namespace URLPerformanceTester.Infrastructure
 {
     public class AccessibleURLAttribute : ValidationAttribute
     {
-        public AccessibleURLAttribute()
-        {
-            ErrorMessage = "URL is wrong or unaccesible.";
-        }
         public override bool IsValid(object value)
         {
-            var url = value as string;
-            if (url == null) return false;
+            var uri = value as Uri;
+            if (uri == null) return false;
             try
             {
-                var request = new HttpWebRequestCreator().Create(new Uri(url));
-                request.Method = "HEAD";
-                using (var response = (HttpWebResponse)request.GetResponse())
+                var urlAttr = new UrlAttribute();
+                if (!urlAttr.IsValid(uri.ToString()))
                 {
-                    if (response.StatusCode == HttpStatusCode.OK) return true;
+                    ErrorMessage = urlAttr.ErrorMessage;
+                    return false;
+                }
+                try
+                {
+                    var request = new HttpWebRequestCreator().Create(uri);
+                    using (var response = (HttpWebResponse)request.GetResponse())
+                    {
+                        return (response.StatusCode == HttpStatusCode.OK);
+                    }
+                }
+                catch (WebException e)
+                {
+                    ErrorMessage = e.Message;
+                    return false;
                 }
             }
-            catch (WebException)
+            catch (UriFormatException e)
             {
+                ErrorMessage = e.Message;
                 return false;
             }
-            return false;
         }
     }
 }

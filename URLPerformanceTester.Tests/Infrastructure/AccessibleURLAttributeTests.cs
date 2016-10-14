@@ -9,7 +9,7 @@ namespace URLPerformanceTester.Tests.Infrastructure
         public void ValidURLTest()
         {
             //arrage
-            var url = "https://www.ukad-group.com/";
+            var url = "ukad-group.com";
             var attr = new AccessibleURLAttribute();
             //act
             var result = attr.IsValid(url);

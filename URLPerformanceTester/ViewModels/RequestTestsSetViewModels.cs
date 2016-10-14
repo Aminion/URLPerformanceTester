@@ -7,9 +7,24 @@ namespace URLPerformanceTester.ViewModels
 {
     public class RequestTestsSetViewModel
     {
-        [Url]
+        
+        public string RawUrl { get; set; }
+
         [AccessibleURL]
-        public string Url { get; set; }
+        public Uri Uri
+        {
+            get
+            {
+                try
+                {
+                    return new UriBuilder(RawUrl).Uri;
+                }
+                catch (Exception)
+                {
+                    return null;
+                }
+            }
+        }
     }
 
     public class RequestTestsSetOverviewViewModel

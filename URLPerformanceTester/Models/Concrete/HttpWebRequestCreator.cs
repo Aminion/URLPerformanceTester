@@ -13,6 +13,7 @@ namespace URLPerformanceTester.Models.Concrete
             request.AllowAutoRedirect = true;
             request.UserAgent = AppSettings.RequestUserAgent;
             request.Headers.Add("Accept-Language", AppSettings.RequestAcceptLanguage);
+            request.CookieContainer = new CookieContainer();
             request.Proxy = null;
             return request;
         }

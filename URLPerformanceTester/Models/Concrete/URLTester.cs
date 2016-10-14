@@ -9,16 +9,18 @@ namespace URLPerformanceTester.Models.Concrete
     public class UrlTester : IUrlTester
     {
         IHttpWebRequestCreator _requestCreator;
+        CookieContainer _cookieContainer;
         public UrlTester(IHttpWebRequestCreator requestCreator)
         {
             _requestCreator = requestCreator;
+            _cookieContainer = new CookieContainer();
         }
         public RequestTest Test(Uri uri)
         {
             var test = new RequestTest() { Url = uri.ToString() };
             var sw = new Stopwatch();
             var request = _requestCreator.Create(uri);
-            request.Method = "HEAD";
+            request.CookieContainer = _cookieContainer;
             try
             {
                 sw.Start();
