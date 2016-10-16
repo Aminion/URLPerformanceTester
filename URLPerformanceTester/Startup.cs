@@ -16,7 +16,7 @@ namespace URLPerformanceTester
         public void Configuration(IAppBuilder app)
         {
             ServicePointManager.Expect100Continue = false;
-            ServicePointManager.DefaultConnectionLimit = 48;
+            ServicePointManager.DefaultConnectionLimit = 12;
             app.CreatePerOwinContext(AppDbContext.Create);
             app.CreatePerOwinContext(() => DependencyResolver.Current.GetService<AppUserManager>());
             app.UseCookieAuthentication(new CookieAuthenticationOptions
