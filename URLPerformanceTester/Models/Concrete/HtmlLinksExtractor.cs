@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Text;
 using URLPerformanceTester.Models.Abstract;
 
 namespace URLPerformanceTester.Models.Concrete
@@ -16,13 +17,13 @@ namespace URLPerformanceTester.Models.Concrete
         }
         public IEnumerable<Uri> Extract(Uri uri, Uri baseUri)
         {
-            var request = _requestCreator.Create(uri);
+            var request = _requestCreator.Create(uri);         
             try
             {
                 using (var response = request.GetResponse())
                 {
                     if (response.ContentType.Contains("text/html"))
-                    {
+                    {                    
                         var doc = new HtmlDocument();
                         doc.Load(response.GetResponseStream());
                         return doc.DocumentNode.SelectNodes("//a")

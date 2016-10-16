@@ -142,6 +142,7 @@
   <ItemGroup>
     <Compile Include="Infrastructure\AccessibleURLAttributeTests.cs" />
     <Compile Include="Models\ApproximativeModeAlgorythmTests.cs" />
+    <Compile Include="Models\ReqSpeed.cs" />
     <Compile Include="Models\SitemapReaderTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
